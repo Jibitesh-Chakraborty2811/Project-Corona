@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        body
+        {
+           background-image: url("https://upload.wikimedia.org/wikipedia/commons/6/6c/NIT_Durgapur_front_.jpg");
+           background-position: center;
+           background-repeat: no-repeat;
+           background-size: cover;      
+        }
+        .Division
+        {
+            border-radius: 50px;
+            background-color: aliceblue;
+            opacity: 65%;
+            margin-right: 500px;
+            margin-left: 500px;
+            margin-top: 200px;
+            margin-bottom: 200px;
+        }
+        h1
+        {
+            text-align: center;
+            font-family: cursive;
+            color: black;
+        }
+        p
+        {
+            text-align: center;
+            font-family: cursive;
+            color: black;
+        }
+    </style>
+    <body>
+        <div class = "Division">
+            <h1> Data </h1>
+            <br>
+            <p id = "Updated" class = "Updated">Updated : </p>
+            <br>
+            <p id = "SPO2" class = "SPO2">SpO2 concentration : </p>
+            <br>
+            <p id = "Heartrate" class = "Heartrate">Heart Rate : </p>
+            <br>
+            <br>
+        </div>
+        <script>
+            
+            const urlSPO2 = 'https://io.adafruit.com/api/v2/JC_1207/feeds/spo2-concentration';
+            const urlHeart = 'https://io.adafruit.com/api/v2/JC_1207/feeds/heart-rate';
+            async function getISS()
+            {
+                
+               const response = await fetch(urlSPO2);
+               const data = await response.json();
+               console.log(data);
+               const response2 = await fetch(urlHeart);
+               const data2 = await response2.json();
+               console.log(data2);
+               
+               console.log(data.updated_at, data.last_value, data2.last_value);
+               var up = document.getElementById("Updated");
+               up.textContent = "Updated : " + data.updated_at;
+               var sp = document.getElementById("SPO2");
+               sp.textContent = "SpO2 concentration : " + data.last_value;
+               var heart = document.getElementById("Heartrate");
+               heart.textContent = "Heart Rate : " + data2.last_value;
+            }
+            getISS();
+        </script>
+    </body>
+</html>
